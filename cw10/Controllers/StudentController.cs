@@ -107,7 +107,18 @@ namespace cw10.Controllers{
         [Route("/api/students/promotions")]
         [HttpPost]
         public IActionResult PromoteStudents(Promotions promotions){
-            if (studentsDbContext.Enrollment.Join(studentsDbContext.Studies, e => e.IdStudy, s => s.IdStudy, (e, s) => e).Any()) {
+            //if (studentsDbContext.Enrollment.Join(studentsDbContext.Studies, e => e.IdStudy, s => s.IdStudy, (e, s) => e).Where().Any()) {
+             //   object[] data = new object[2] {promotions.Studies,promotions.Semester};
+             //   studentsDbContext.Database.ExecuteSqlRaw("EXEC ProcedurePromoteStudents @StudiesName,@Semester",data);
+             //   studentsDbContext.SaveChanges();
+             //   return Ok();
+            //}
+             var res = from enroll in studentsDbContext.Enrollment
+                      join studies in studentsDbContext.Studies on enroll.IdStudy equals studies.IdStudy
+                      where enroll.Semester == promotions.Semester && studies.Name == promotions.Studies
+                      select enroll;
+
+            if (res!=null) {
                 object[] data = new object[2] {promotions.Studies,promotions.Semester};
                 studentsDbContext.Database.ExecuteSqlRaw("EXEC ProcedurePromoteStudents @StudiesName,@Semester",data);
                 studentsDbContext.SaveChanges();
