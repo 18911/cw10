@@ -43,23 +43,23 @@ namespace cw10.Controllers{
         public IActionResult ModifyStudent(ModifyStudent modifyStudent) {
             if (studentsDbContext.Student.Where(s => s.IndexNumber == modifyStudent.Index).Any()){
                 var student = studentsDbContext.Student.SingleOrDefault(s => s.IndexNumber == modifyStudent.Index);
-                if (student.IndexNumber != modifyStudent.IndexNumber) {
+                if (student.IndexNumber != modifyStudent.IndexNumber && modifyStudent.IndexNumber!= null) {
                     student.IndexNumber = modifyStudent.IndexNumber;
                     studentsDbContext.SaveChanges();
                 }
-                if (student.FirstName != modifyStudent.FirstName) {
+                if (student.FirstName != modifyStudent.FirstName && modifyStudent.FirstName!= null) {
                     student.FirstName = modifyStudent.FirstName;
                     studentsDbContext.SaveChanges();
                 }
-                if (student.LastName != modifyStudent.LastName){
+                if (student.LastName != modifyStudent.LastName && modifyStudent.LsatName != null){
                     student.LastName = modifyStudent.LastName;
                     studentsDbContext.SaveChanges();
                 }
-                if (student.Birthdate != modifyStudent.Birthdate){
+                if (student.Birthdate != modifyStudent.Birthdate && modifyStudent.Birthdate != null){
                     student.Birthdate = modifyStudent.Birthdate;
                     studentsDbContext.SaveChanges();
                 }
-                if (student.IdEnrollment != modifyStudent.IdEnrollment){
+                if (student.IdEnrollment != modifyStudent.IdEnrollment && modifyStudent.IdEnrollment != null){
                     student.IdEnrollment = modifyStudent.IdEnrollment;
                     studentsDbContext.SaveChanges();
                 }
